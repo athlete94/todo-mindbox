@@ -1,26 +1,64 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import {AddItemForm} from "./components/AddItemForm/AddItemForm";
+import Todolist from "./components/Todolist/Todolist";
+import {v1} from 'uuid'
+
+export type FilterType = 'All' | 'Active' | 'Completed'
+
+// task types
+export type TaskType = {
+    id: string
+    name: string
+    filter: FilterType
+}
+export type TasksType = {
+    [key: string]: Array<TaskType>
+}
+
+//Todolist type
+export type TodolistType = {
+    id: string
+    name: string
+    filter: FilterType
+}
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+    let [todolists, setTodolists] = useState<Array<TodolistType>>([
+        {id: v1(), filter: 'All', name: 'First list'},
+        {id: v1(), filter: 'All', name: '2 list'}
+    ])
+    let [tasks, setTasks] = useState<Array<TasksType>>([])
+    let [filter, setFilter] = useState<FilterType>('All')
+
+
+    const addNewList = (name: string) => {
+        setTodolists([...todolists, {id: v1(), name, filter: 'All'}])
+    }
+
+    const changeFilter = (filterValue: FilterType) => {
+        setFilter(filterValue)
+    }
+
+    return (
+        <div className="App">
+            <AddItemForm callBack={addNewList}/>
+
+            <div className='todolists'>
+                {
+                    todolists.map(t => {
+                        return <Todolist key={t.id}
+                                         id={t.id}
+                                         name={t.name}
+                                         filter={t.filter}
+                        />
+                    })
+                }
+
+            </div>
+        </div>
+    );
 }
 
 export default App;
