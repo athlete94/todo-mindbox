@@ -1,3 +1,19 @@
 .todolist {
+    margin-top: 50px;
+}
 
+.tasksBlock {
+    margin-top: 10px;
+    width: 100%;
+    height: 100%;
+    box-shadow: 1px 1px 5px 1px #ccc;
+    padding: 5px;
+}
+
+.tasksBlock ul {
+    margin: 0;
+    padding: 0;
+}
+.tasksBlock li {
+    list-style-type: none;
 }

@@ -1,10 +1,16 @@
 import React from 'react';
 import s from './Task.module.css'
 
-const Task = () => {
+type TaskPropsType = {
+    id: string
+    title: string
+    completed: boolean
+}
+const Task = ({id, title, completed}: TaskPropsType) => {
     return (
         <div className={s.task}>
-            
+            <input type="checkbox"/>
+            {title}
         </div>
     );
 };
