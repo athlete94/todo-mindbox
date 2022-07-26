@@ -10,41 +10,84 @@ type TodolistPropsType = {
     filter: FilterType
     tasks: Array<TaskType>
     addTask: (todoId: string, title: string) => void
+    changeFilter: (filterValue: FilterType, todoId: string) => void
+    deleteCompleted: (todoId: string) => void
+    changeTaskStatus: (todoId: string, taskId: string, status: boolean) => void
 }
 
-const Todolist = ({id, title, filter, tasks, addTask}: TodolistPropsType) => {
+const Todolist = ({
+                      id,
+                      title,
+                      filter,
+                      tasks,
+                      addTask,
+                      changeFilter,
+                      deleteCompleted,
+                      changeTaskStatus
+                  }: TodolistPropsType) => {
 
+    //tasks
     const newTaskHandler = (title: string) => {
         addTask(id, title)
+    }
+    const deleteCompletedTasks = () => {
+        deleteCompleted(id)
+    }
+
+    //filter
+    const allOnclickHandler = () => {
+        changeFilter('All', id)
+    }
+    const activeOnclickHandler = () => {
+        changeFilter('Active', id)
+    }
+    const completedOnclickHandler = () => {
+        changeFilter('Completed', id)
+    }
+
+    //filter tasks
+
+    let filteredTasks = tasks
+    if(filter === 'Active') {
+        filteredTasks = tasks.filter(t => !t.completed)
+    }
+    if(filter === 'Completed') {
+        filteredTasks = tasks.filter(t => t.completed)
     }
 
     return (
         <div className={s.todolist}>
             <div className={s.todolistTitle}>
-                {title}
+                <h3>{title}</h3>
             </div>
 
             <div className={s.tasksBlock}>
-                <AddItemForm callBack={newTaskHandler}/>
+                <AddItemForm callBack={newTaskHandler} placeholder={'What needs to be done?'}/>
                 <ul>
-                    {tasks.map(task => {
+                    {filteredTasks.map(task => {
                         return <li>
                             <Task key={task.id}
                                   id={task.id}
                                   title={task.title}
-                                  completed={task.completed}/>
+                                  completed={task.completed}
+                                  changeTaskStatus={(taskId, status) => changeTaskStatus(id, taskId, status)}/>
                         </li>
                     })}
                 </ul>
                 <div className={s.todoBottom}>
                     <div className={s.leftItems}>
-
+                        <span>{tasks.filter(t => !t.completed).length} items left</span>
                     </div>
                     <div className={s.filters}>
-
+                        <button onClick={allOnclickHandler}
+                                className={filter === 'All' ? s.activeFilter : s.filter}>All</button>
+                        <button onClick={activeOnclickHandler}
+                                className={filter === 'Active' ? s.activeFilter : s.filter}>Active</button>
+                        <button onClick={completedOnclickHandler}
+                                className={filter === 'Completed' ? s.activeFilter : s.filter}>Completed</button>
                     </div>
                     <div className={s.clearButton}>
-
+                        <button onClick={deleteCompletedTasks}>CLear completed</button>
                     </div>
                 </div>
             </div>

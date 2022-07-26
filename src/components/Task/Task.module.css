@@ -1,0 +1,11 @@
+.task {
+    display: flex;
+    gap: 3%;
+}
+
+.completed {
+    display: flex;
+    gap: 3%;
+    text-decoration: line-through;
+    opacity: 50%;
+}

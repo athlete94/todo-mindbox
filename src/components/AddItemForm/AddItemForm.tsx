@@ -39,7 +39,6 @@ export const AddItemForm = React.memo((props:AddItemFormTypeProps) => {
     return (
         <div>
             <div className={s.addItemForm}>
-                <div>
                     <input value={title}
                            onChange={onChangeHandler}
                            onKeyPress={onKeyPressHandler}
@@ -48,10 +47,9 @@ export const AddItemForm = React.memo((props:AddItemFormTypeProps) => {
                            onFocus={onFocusHandler}
                            disabled={props.disabled}
                     />
-                </div>
-                <div>
-                    <button onClick={addTask} disabled={props.disabled}>add</button>
-                </div>
+                {/*<div>*/}
+                {/*    <button onClick={addTask} disabled={props.disabled}>add</button>*/}
+                {/*</div>*/}
 
             </div>
             {error && <div className="error-message">{error}</div>}

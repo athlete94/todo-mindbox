@@ -33,7 +33,7 @@ function App() {
     // todolists
     const addNewList = (title: string) => {
         let todoId = v1()
-        setTodolists([{id: todoId, title, filter: 'All'}, ...todolists] )
+        setTodolists([{id: todoId, title, filter: 'All'}, ...todolists])
         setTasks({
             [todoId]: []
         })
@@ -45,16 +45,27 @@ function App() {
             [todoId]: [{id: v1(), title, completed: false}, ...tasks[todoId]]
         })
     }
+    const deleteCompleted = (todoId: string) => {
+        setTasks({
+            [todoId]: tasks[todoId].filter(t => !t.completed)
+        })
+    }
+    const changeTaskStatus =  (todoId: string, taskId: string, status: boolean) => {
+        setTasks({
+            [todoId]: tasks[todoId].map(t => t.id === taskId ? {...t, completed: status} : t)
+        })
+    }
 
     //filter
-    const changeFilter = (filterValue: FilterType) => {
+    const changeFilter = (filterValue: FilterType, todoId: string) => {
         setFilter(filterValue)
+        setTodolists(todolists.map(tl => tl.id === todoId ? {...tl, filter: filterValue} : tl))
     }
 
 
     return (
         <div className="App">
-            <AddItemForm callBack={addNewList}/>
+            <AddItemForm callBack={addNewList} placeholder={'New list'}/>
 
             <div className='todolists'>
                 {
@@ -66,6 +77,9 @@ function App() {
                                          filter={t.filter}
                                          tasks={todolistTasks}
                                          addTask={addTask}
+                                         changeFilter={changeFilter}
+                                         deleteCompleted={deleteCompleted}
+                                         changeTaskStatus={changeTaskStatus}
                         />
                     })
                 }
