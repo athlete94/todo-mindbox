@@ -45,15 +45,6 @@ const Todolist = ({
         changeFilter('Completed', id)
     }
 
-    //filter tasks
-
-    let filteredTasks = tasks
-    if(filter === 'Active') {
-        filteredTasks = tasks.filter(t => !t.completed)
-    }
-    if(filter === 'Completed') {
-        filteredTasks = tasks.filter(t => t.completed)
-    }
 
     return (
         <div className={s.todolist}>
@@ -64,9 +55,10 @@ const Todolist = ({
             <div className={s.tasksBlock}>
                 <AddItemForm callBack={newTaskHandler} placeholder={'What needs to be done?'}/>
                 <ul>
-                    {filteredTasks.map(task => {
+                    {tasks.map(task => {
+                        debugger
                         return <li>
-                            <Task key={task.id}
+                            <Task
                                   id={task.id}
                                   title={task.title}
                                   completed={task.completed}
