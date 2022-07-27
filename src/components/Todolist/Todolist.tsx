@@ -13,6 +13,7 @@ type TodolistPropsType = {
     changeFilter: (filterValue: FilterType, todoId: string) => void
     deleteCompleted: (todoId: string) => void
     changeTaskStatus: (todoId: string, taskId: string, status: boolean) => void
+    deleteTodolist: (todoId: string) => void
 }
 
 const Todolist = ({
@@ -23,8 +24,15 @@ const Todolist = ({
                       addTask,
                       changeFilter,
                       deleteCompleted,
-                      changeTaskStatus
+                      changeTaskStatus,
+                      deleteTodolist
                   }: TodolistPropsType) => {
+
+
+
+    const deleteTodoHandler = () => {
+        deleteTodolist(id)
+    }
 
     //tasks
     const newTaskHandler = (title: string) => {
@@ -50,13 +58,13 @@ const Todolist = ({
         <div className={s.todolist}>
             <div className={s.todolistTitle}>
                 <h3>{title}</h3>
+                <button onClick={deleteTodoHandler}>x</button>
             </div>
 
             <div className={s.tasksBlock}>
                 <AddItemForm callBack={newTaskHandler} placeholder={'What needs to be done?'}/>
                 <ul>
                     {tasks.map(task => {
-                        debugger
                         return <li>
                             <Task
                                   id={task.id}
@@ -79,7 +87,7 @@ const Todolist = ({
                                 className={filter === 'Completed' ? s.activeFilter : s.filter}>Completed</button>
                     </div>
                     <div className={s.clearButton}>
-                        <button onClick={deleteCompletedTasks}>CLear completed</button>
+                        <button onClick={deleteCompletedTasks}>Clear completed</button>
                     </div>
                 </div>
             </div>

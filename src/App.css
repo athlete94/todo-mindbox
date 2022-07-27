@@ -1,11 +1,11 @@
 .App {
   margin: 50px auto;
-  width: 1000px;
+  width: 1280px;
 
 }
 
 .todolists {
   display: flex;
-  gap: 4%;
+  justify-content: left;
   flex-wrap: wrap;
 }

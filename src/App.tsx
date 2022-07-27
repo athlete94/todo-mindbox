@@ -29,18 +29,19 @@ function App() {
     let [tasks, setTasks] = useState<TasksType>({})
 
     // todolists
-    const addNewList = (title: string) => {
+     const addNewList = (title: string) => {
         let todoId = v1()
         setTodolists([{id: todoId, title, filter: 'All'}, ...todolists])
-        setTasks({
-            [todoId]: [],
-            ...tasks
-        })
+        setTasks({[todoId]: [], ...tasks})
+    }
+    const deleteTodolist = (todoId: string) => {
+        setTodolists(todolists.filter(t => t.id !== todoId))
+        delete tasks[todoId]
+        setTasks({...tasks})
     }
 
     //tasks
     const addTask = (todoId: string, title: string) => {
-        debugger
         setTasks({
             ...tasks,
             [todoId]: [{id: v1(), title, completed: false}, ...tasks[todoId]]
@@ -90,6 +91,7 @@ function App() {
                                          changeFilter={changeFilter}
                                          deleteCompleted={deleteCompleted}
                                          changeTaskStatus={changeTaskStatus}
+                                         deleteTodolist={deleteTodolist}
                         />
                     })
                 }
