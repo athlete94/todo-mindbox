@@ -2,7 +2,7 @@ import React from 'react';
 import s from './Todolist.module.css'
 import {FilterType, TaskType} from "../../App";
 import {AddItemForm} from "../AddItemForm/AddItemForm";
-import Task from "../Task/Task";
+import {Task} from "../Task/Task";
 
 type TodolistPropsType = {
     id: string

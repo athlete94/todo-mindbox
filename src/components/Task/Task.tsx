@@ -7,7 +7,7 @@ type TaskPropsType = {
     completed: boolean
     changeTaskStatus: (taskId: string, status: boolean) => void
 }
-const Task = ({id, title, completed, changeTaskStatus}: TaskPropsType) => {
+export const Task = ({id, title, completed, changeTaskStatus}: TaskPropsType) => {
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         changeTaskStatus(id, e.currentTarget.checked)
@@ -22,4 +22,3 @@ const Task = ({id, title, completed, changeTaskStatus}: TaskPropsType) => {
     );
 };
 
-export default Task;
